@@ -1,9 +1,12 @@
 {{define "viewPage" }}
 {{template "header" .}}
+<div class="container">
 <h1>{{.Title}}</h1>
 
 <p>[<a href="/edit/{{.Title}}">edit</a>]</p>
 
-<div>{{printf "%s" .Body}}</div>
+<div>{{.HtmlBody}}</div>
+</div>
 {{template "footer"}}
+{{template "tail"}}
 {{end}}

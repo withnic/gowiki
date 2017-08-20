@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"regexp"
@@ -97,6 +98,17 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 	renderer.Render(w, "viewPage", p)
 }
 
+func markdownHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseMultipartForm(32 << 20)
+	body := r.FormValue("body")
+	output := pages.Util.Parse([]byte(body))
+
+	if err := json.NewEncoder(w).Encode(string(output)); err != nil {
+		log.Fatal(err)
+	}
+
+}
+
 func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 	body := r.FormValue("body")
 	p := &pages.Page{
@@ -123,6 +135,7 @@ func main() {
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
 	http.HandleFunc("/static/", staticHandler)
+	http.HandleFunc("/api/mkd", markdownHandler)
 	http.HandleFunc("/", handler)
 
 	addr := fmt.Sprintf(":%d", *port)

@@ -2,12 +2,14 @@ package pages
 
 import (
 	"errors"
+	"html/template"
 	"io/ioutil"
 )
 
 type Page struct {
-	Title string
-	Body  []byte
+	Title    string
+	Body     []byte
+	HtmlBody template.HTML
 }
 
 func (p *Page) write(path string) error {
