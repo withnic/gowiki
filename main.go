@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"regexp"
 
@@ -10,7 +11,6 @@ import (
 
 	"strings"
 
-	"github.com/labstack/gommon/log"
 	"github.com/withnic/gowiki/models/pages"
 	"github.com/withnic/gowiki/models/templates"
 )
